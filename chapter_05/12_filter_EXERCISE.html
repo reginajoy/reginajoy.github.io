@@ -7,6 +7,49 @@
 	</head>
 	<body>
 		<script type="text/javascript">
+
+      var rowConverter = function(d) { //convert to integer
+        return {
+          county: d.Geo_NAME,
+          median_income: parseFloat(d.median_income)
+        };
+      }
+
+      var dataset;
+
+      d3.csv("data/density_income_ny_counties.csv", rowConverter) //load csv
+
+    .then(function(data) {
+      console.log(data);
+      dataset = data;
+    })
+
+       // .catch(function(error){
+      //handle error
+    //})
+
+    d3.select("body").selectAll("p")
+      .data(dataset)
+      .enter()
+      .append("p")
+      .text(function(d) {
+        return d.Geo_NAME;
+      })  
+      .style("color", function(d) {
+        if (d.median_income > 65323) {
+          return "red";
+      } else {
+          return "black"
+        }
+
+
+
+      });
+
+      //function(dataset) {
+      //return dataset;
+
+
       
       //use what you have learned so far to load the file of density and income data in the data folder in this chapter
       //file name is "density_income_ny_counties.csv"
