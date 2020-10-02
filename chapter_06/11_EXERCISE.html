@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>D3: Using conditions and values with SVG</title>
-		<script type="text/javascript" src="../d3.js"></script>
+		<script type="text/javascript" src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 		<style type="text/css">
 			/* No style rules here yet */		
 		</style>
@@ -18,8 +18,8 @@
             //4. change the svg dimensions(w or h variables) so that all circles fit into svg and are not clipped.
             
 			//Width and height
-			var w = 300;
-			var h = 20;
+			var w = 1000;
+			var h = 50;
 			
 			//Dataset of fake planets
 			var dataset = [
@@ -41,20 +41,27 @@
 			    .enter()
 			    .append("circle");
 
-			circles.attr("cx", function(d, i) {
+			circles.attr("cx", function(d, i) {	//cx is x position
             //change distance here
-						return (i * 50) + 25;
+						return (i * 50) + 25
+						//return (i * 50) + 25;
 					})
-				   .attr("cy", h/2)
+				   .attr("cy", h/2)	//y position
 				   .attr("r", function(d) {
              //change radius here
-						return 5;
+						return (d.radius);
 				   })
 				   .attr("fill", function(d){
                //you will put "if else" statement here to return 2 things depending on the radius(d) instead of return gold
-				       return "gold"
+			       if (d.radius > 5) {
+			       	return "blue";
+			       } else {
+				       	return "red"
+			       }
 				   })
 				   .attr("stroke-width",2);
+
+
 
 		</script>
 	</body>
