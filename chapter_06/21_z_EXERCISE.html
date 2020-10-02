@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>D3: SVG bar chart with value labels (centered)</title>
-		<script type="text/javascript" src="../d3.js"></script>
+		<script type="text/javascript" src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 		<style type="text/css">
 			/* No style rules here yet */		
 		</style>
@@ -34,20 +34,23 @@
 			   .append("rect")
                 //HINT: start by switching the x and y values with eachother, and the width and height values with eachother. 
                         //then adjust the x values such that each rectangle aligns on the left.
-			   .attr("x", function(d, i) {
-			   		return i * (w / dataset.length);
+			   .attr("y", function(d, i) {
+			   		return i * (w / dataset.length) //h - (d * 4); //rectangles draw down, origin point starts from bottom right and go up, height - y 
 			   })
-			   .attr("y", function(d) {
-			   		return h - (d * 4);
+			   .attr("x", function(d) { // set x to rectangle // function(d, i)
+			   		return 0;
+			   		//return i * (w / dataset.length);
 			   })
-			   .attr("width", w / dataset.length - barPadding)
-			   .attr("height", function(d) {
-			   		return d * 4;
-			   })
+			   .attr("height", w / dataset.length - barPadding)
+			   .attr("width", function(d, i) {
+			   		return d * 4; // w / dataset.length - barPadding)
+			   	})
+			  
 			   .attr("fill", function(d) {
-					return "rgb(0, 0, " + Math.round(d * 10) + ")";
+					return "rgb(" + Math.round(d * 10) + ",0 ,0)";
 			   });
 
+//to do horizontal, switch width and height, and switch x and y, x return 0
 
              // NOTE: you will need to repeat the same steps for the text labels
 			svg.selectAll("text")
@@ -58,11 +61,11 @@
 			   		return d;
 			   })
 			   .attr("text-anchor", "middle")
-			   .attr("x", function(d, i) {
-			   		return i * (w / dataset.length) + (w / dataset.length - barPadding) / 2;
+			   .attr("x", function(d) {
+			   		return (d * 4) - 14 //i * (w / dataset.length) + (w / dataset.length - barPadding) / 2;
 			   })
-			   .attr("y", function(d) {
-			   		return h - (d * 4) + 14;
+			   .attr("y", function(d, i) {
+			   		return i * (w / dataset.length) + (w / dataset.length - barPadding) / 2; //h - (d * 4) + 14;
 			   })
 			   .attr("font-family", "sans-serif")
 			   .attr("font-size", "11px")
