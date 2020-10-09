@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>D3: Time scale</title>
-		<script type="text/javascript" src="../d3.js"></script>
+		<script type="text/javascript" src="https://d3js.org/d3.v6.min.js" charset="utf-8"></script>
 		<style type="text/css">
 			/* No style rules here yet */		
 		</style>
@@ -26,9 +26,9 @@
             
             //you will find that each small task is labeled with the words TODO:
 
-			var w = 800;
+			var w = 1000;
 			var h = 500;
-			var padding = 40;
+			var padding = 50;
 			
 			var dataset, xScale, yScale, rScale; 
 
@@ -83,6 +83,14 @@
 									d3.max(dataset, function(d) { return d.Count; })
 								])
 							   .range([h - padding, padding]);
+
+				rScale = d3.scaleLinear()
+							   .domain([
+									d3.min(dataset, function(d) { return d.Count; }),
+									d3.max(dataset, function(d) { return d.Count; })
+								])
+							   .range([2, 20]);			
+
 		          
                   //TODO:add a third linear scale here for the radius of the circles called rScale. 
                 // the domain would be the minimum and maxium values for the count same as the yScale
@@ -93,36 +101,42 @@
 							.attr("width", w)
 							.attr("height", h);
 
- 				svg.selectAll("text")
- 				   .data(dataset)
- 				   .enter()
- 				   .append("text")
- 				   .text(function(d) {
-                       //TODO: return the approperiate label value
- 				   })
- 				   .attr("x", function(d) {
-                       //TODO: return the approperiate x value
- 				   })
- 				   .attr("y", function(d) {
-                       //TODO: return the approperiate y value
- 				   })
- 				   .attr("font-family", "sans-serif")
- 				   .attr("font-size", "11px")
- 				   .attr("fill", "#bbb");
-
 				svg.selectAll("circle")
 				   .data(dataset)
 				   .enter()
 				   .append("circle")
 				   .attr("cx", function(d) {
+				   		return xScale(d.Hour);
                        //TODO: return the approperiate x value
 				   })
 				   .attr("cy", function(d) {
+				   		return yScale(d.Count);
                        //TODO: return the approperiate y value
 				   })
 				   .attr("r", function(d){
+				   		return rScale(d.Count);
                        //TODO: use the rScale to create circles whose size correspond to the count
 				   });
+
+				svg.selectAll("text")
+ 				   .data(dataset)
+ 				   .enter()
+ 				   .append("text")
+ 				   .text(function(d) {
+ 				   		return (d.Count);
+                       //TODO: return the approperiate label value
+ 				   })
+ 				   .attr("x", function(d) {
+ 				   		return xScale(d.Hour) + rScale(d.Count);
+                       //TODO: return the approperiate x value
+ 				   })
+ 				   .attr("y", function(d) {
+ 				   		return yScale(d.Count) + rScale(d.Count);
+                       //TODO: return the approperiate y value
+ 				   })
+ 				   .attr("font-family", "sans-serif")
+ 				   .attr("font-size", "11px")
+ 				   .attr("fill", "#298779");
                    
                    //TODO: you may see that now the new radius overlaps the labels and are hard to see. adjust it in 1 of 2 ways
                    //either change the order and draw the circles before you draw the labels so that labels lie on top
