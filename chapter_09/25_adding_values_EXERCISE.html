@@ -3,26 +3,20 @@
 	<head>
 		<meta charset="utf-8">
 		<title>D3: Adding values and elements to a chart</title>
-		<script type="text/javascript" src="../d3.js"></script>
+		<script type="text/javascript" src="https://d3js.org/d3.v6.min.js" charset="utf-8"></script>
 		<style type="text/css">
 			/* No style rules here yet */
 		</style>
 	</head>
-	<body>
-	
-		<p>Click on this text to add a new data value to the chart!</p>
+
+<body>
+  <p>Click on this button to add a new data value to the chart!</p>
 			
 		<script type="text/javascript">
 
-
-            //ASSIGNMENT:
-            //this code currently adds only the bar on click, but not the number labels
-            // change the code so that labels are also added each time a bar is added
-            //look for TODO: label toward end of code
-            
 			//Width and height
 			var w = 600;
-			var h = 250;
+			var h = 450;
 			
 			var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
 							11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
@@ -81,8 +75,7 @@
 			   .attr("fill", "white");
 
 
-
-
+      
 			//On click, update with new data			
 			d3.select("p")
 				.on("click", function() {
@@ -98,17 +91,16 @@
 
 					//Select…
 					var bars = svg.selectAll("rect")			//Select all bars
-						.data(dataset);							//Re-bind data to existing bars, return the 'update' selection
-																//'bars' is now the update selection
-					
+						.data(dataset);	//Re-bind data to existing bars, return the 'update' selection
+														//'bars' is now the update selection					
 					//Enter…
-					bars.enter()								//References the enter selection (a subset of the update selection)
-						.append("rect")							//Creates a new rect
-						.attr("x", w)							//Sets the initial x position of the rect beyond the far right edge of the SVG
-						.attr("y", function(d) {				//Sets the y value, based on the updated yScale
+					bars.enter()	//References the enter selection (a subset of the update selection)
+						.append("rect")	//Creates a new rect
+						.attr("x", w)		//Initial x position of the rect beyond the right edge of SVG
+						.attr("y", function(d) {	//Sets the y value, based on the updated yScale
 							return h - yScale(d);
 						})
-						.attr("width", xScale.bandwidth())		//Sets the width value, based on the updated xScale
+						.attr("width", xScale.bandwidth())	//Sets the width value, based on the updated xScale
 						.attr("height", function(d) {			//Sets the height value, based on the updated yScale
 							return yScale(d);
 						})
@@ -129,29 +121,36 @@
 							return yScale(d);
 						});
 
-
-
-					//TODO: Update all labels
-					//
-					//Exercise: Modify this code to add a new label each time a new bar is added!
-					//
-					svg.selectAll("text")
-					   .data(dataset)
-					   .transition()
-					   .duration(500)
-					   .text(function(d) {
+					//Update all labels
+					var labels = svg.selectAll("text")
+						.data(dataset);
+					
+					labels.enter()
+					    .append("text")
+					    .text(function(d) {
 					   		return d;
 					   })
-					   .attr("x", function(d, i) {
-							return xScale(i) + xScale.bandwidth() / 2;
+					    .attr("text-anchor", "middle")
+					    .attr("font-family", "sans-serif")
+					    .attr("font-size", "11px")
+					    .attr("fill", function(d) {
+								if (d < 0.07 * maxValue){	return "black"	}
+			   				else {	return "white"	}
+			   			})
+					    .attr("x", function(d, i) {
+							return w + xScale.bandwidth() / 2;
 					   })
-					   .attr("y", function(d) {
-							return h - yScale(d) + 14;
-					   });
+					    .attr("y", function(d) {
+							if (d < 0.07 * maxValue){	return h - yScale(d) - 7	}
+			   			else {	return h - yScale(d) + 14;	}
+					   })
+					    .merge(labels)
+					    .transition()
+					    .duration(500)
+					    .attr("x", function(d, i) { //Set new x position, based on the updated xScale
+							return xScale(i) + xScale.bandwidth() / 2;
+						})
 
 				});
-
-			
-		</script>
-	</body>
-</html>
+      </script>
+</body>
