@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>D3: Sorting visual elements</title>
-		<script type="text/javascript" src="../d3.js"></script>
+		<script type="text/javascript" src="https://d3js.org/d3.v6.min.js" charset="utf-8"></script>
 		<style type="text/css">
 			/* No style rules here yet */		
 		</style>
@@ -92,6 +92,19 @@
                    
                    //TODO: move the labels accordingly within the sortBars function here
                    //start by selecting all text
+
+            //var labels = svg.selectAll("text")
+            				//.data(dataset)
+
+            	svg.selectAll("text")		
+				   .sort(function(a, b) {
+					   return d3.ascending(a, b);
+				   	})
+				   .transition()
+				   .duration(1000)
+				   .attr("x", function(d, i) {
+				   		return xScale(i) + 15;
+				   });
                    
 
 			};			
