@@ -1,0 +1,36 @@
+source,target,value
+Desk,Monday,10.75
+Desk,Tuesday,11
+Desk,Wednesday,7.25
+Desk,Thursday,12.75
+Desk,Friday,12.25
+Bedroom,Monday,9.75
+Bedroom,Tuesday,8.25
+Bedroom,Wednesday,7.75
+Bedroom,Thursday,8.25
+Bedroom,Friday,9.5
+Living Room,Monday,0.25
+Living Room,Tuesday,1.25
+Living Room,Wednesday,4.25
+Living Room,Thursday,0.5
+Living Room,Friday,0
+Kitchen,Monday,1.75
+Kitchen,Tuesday,1.25
+Kitchen,Wednesday,0.25
+Kitchen,Thursday,1.25
+Kitchen,Friday,0.75
+Outside,Monday,0
+Outside,Tuesday,0.75
+Outside,Wednesday,3.25
+Outside,Thursday,0
+Outside,Friday,1
+Bathroom,Monday,1
+Bathroom,Tuesday,1.25
+Bathroom,Wednesday,0.75
+Bathroom,Thursday,1
+Bathroom,Friday,0.5
+Dining Room,Monday,0.5
+Dining Room,Tuesday,0.25
+Dining Room,Wednesday,0.5
+Dining Room,Thursday,0.25
+Dining Room,Friday,0
